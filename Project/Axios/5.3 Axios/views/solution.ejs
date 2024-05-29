@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solutions</title>
+
+</head>
+<body>
+
+  <button id="addButton" >Add Item</button>
+
+  <h1>Items Details</h1>
+  <ul>
+    <% data.forEach(item => { %>
+      <li>
+        <h2><%= item.ItemName %></h2>
+        <p><strong>Serial Number:</strong> <%= item.SerialNumber %></p>
+        <p><strong>Quantity:</strong> <%= item.Quantity %></p>
+        <p><strong>Category:</strong> <%= item.Category %></p>
+        <p><strong>Assigned To:</strong> <%= item.AssignedTo %></p>
+        <p><strong>Bill Number:</strong> <%= item.BillNumber %></p>
+        <p><strong>Date of Purchase:</strong> <%= item.DateOfPurchase %></p>
+        <p><strong>Warranty:</strong> <%= item.Warranty %></p>
+      </li>
+    <% }); %>
+
+  </ul>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+
+<script>
+document.getElementById('addButton').addEventListener('click', function() {
+    // Send AJAX POST request to add item
+    console.log("Add Button Clicked");
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          // Reload the page on success
+          console.log("Post succesfull from Button");
+          location.reload();
+        } else {
+          console.log("Post failed from Button");
+          console.error('Failed to make request:', xhr.statusText);
+        }
+      }
+    };
+    xhr.send();
+  });
+</script>
+</body>
+
+
+</html>

@@ -1,0 +1,71 @@
+/*
+.center{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.card {
+    background: rgba(255, 255, 255, 0.799);  Semi-transparent white 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+.card h1 {
+    margin-bottom: 20px;
+}
+
+.card form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card label {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.card input {
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.card button {
+    padding: 10px 20px;
+    background: #00008b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.card button:hover {
+    background: #000066;
+}
+
+*/
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.card{
+    position: fixed;
+}
+.sidenav {
+    position: fixed;
+    top: 2%;
+    left: 2%;
+    bottom: 20px;
+    width: 15%; /* Set width of sidenav */
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+    border-radius: 10px;
+    padding: 20px; /* Add padding */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
+}
