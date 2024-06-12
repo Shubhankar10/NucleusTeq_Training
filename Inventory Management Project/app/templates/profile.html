@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/flash.css')}}">
+
+
+    <style>
+        .profile-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .profile-container h1 {
+            margin-bottom: 20px;
+        }
+        .profile-info {
+            margin-bottom: 10px;
+        }
+        .profile-info span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="login bg-gray-300">
+    <div class="absolute bg-[#00C7C4] left-[195px] rounded-full h-[400px] w-[400px]"></div>
+    <div class="absolute bg-blue-600 bottom-4 right-36 rounded-full h-[450px] w-[450px]"></div>
+    <div class="backdrop-blur-[80px] bg-cover w-screen overflow-hidden h-screen flex items-center justify-center">
+
+        <div class="w-full h-full items-center justify-center flex p-6">
+
+            
+        <!-- Edit User Modal -->
+        <div id="editUserModal" class="fixed z-10 inset-0 hidden  bg-opacity-50 bg-black">
+            <div class="flex items-center justify-center min-h-screen">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <form id="editUserForm" action="/edit-user" method="POST">
+                        <input type="hidden" name="uid" id="editUserUID">
+                        
+                    <div class="mb-3">
+                        <label for="editFullName" class="form-label">Name : </label><br>
+                        <input type="text" id="editFullName" name="fullName" class="border rounded p-1 w-fullform-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editEmail" class="form-label">Email : </label><br>
+                        <input type="text" class="form-control border rounded p-1 w-full" id="editEmail" name="email" required>
+                    </div>
+
+                        <div>
+                            <label for="editIsAdmin">Is Admin:</label>
+                            <input type="checkbox" id="editIsAdmin" name="isAdmin">
+                        </div>
+                        <div class="flex justify-end mt-4">
+                            <button type="button" onclick="hideModal('editUserModal')" class="bg-black text-white  rounded px-4 py-2">Cancel</button>
+                            <button type="submit" class="bg-white text-black ring-black ring-2 rounded px-4 py-2 ml-2">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flash code -->
+        <div id="flash-messages" class="flash-messages"></div>
+
+        <!-- Flask template -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div id="flash-messages" class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+            <div
+                class="border-dotted mx-10 p-5 lg:h-[440px] lg:w-[450px] rounded-xl  aspect-video w-96 bg-slate-50 backdrop-blur-[900px] shadow-lg ring-1 ring-black/5">
+                <h1 class="text-center text-4xl uppercase font-bold text-black mb-12">User Profile</h1>
+
+                <div class="profile-info pb-2 text-lg">
+                    <span class="font-bold text-xl">Full Name:</span> <br> {{ user.FullName }}
+                </div>
+                <div class="profile-info pb-2 text-lg">
+                    <span class="font-bold text-xl">Email:</span> <br> {{ user.Email }}
+                </div>
+                <div class="profile-info pb-2 text-lg">
+                    <span class="font-bold text-xl">Admin Access:</span> {{ 'Yes' if user.isAdmin else 'No' }}
+                </div>
+                
+                <div class="relative">
+                    <button onclick="showEditUserModal('{{ user.UID }}', '{{ user.FullName }}', '{{ user.Email }}', '{{ user.isAdmin }}')"
+                    class="bg-black text-white px-8 py-2 rounded-md hover:scale-110 transition-all delay-150 absolute bottom-0 right-0">
+                        Edit
+                    </button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <script>
+        function showEditUserModal(uid, fullName, email, isAdmin) {
+            document.getElementById('editUserUID').value = uid;
+            document.getElementById('editFullName').value = fullName;
+            document.getElementById('editEmail').value = email;
+            document.getElementById('editIsAdmin').checked = isAdmin;
+            document.getElementById('editUserModal').classList.remove('hidden');
+        }
+        
+    </script>
+</body>
+</html>
